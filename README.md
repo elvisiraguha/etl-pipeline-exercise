@@ -11,3 +11,5 @@ and loads it into a PostgreSQL database.
 
 Extraction
 Use the WHO GHO OData API to extract data on a health-related topic of your choice (e.g., life expectancy, disease prevalence, etc.). You can find the API documentation here: https://www.who.int/data/gho/info/gho-odata-api.
+
+Potential work to be done is replace country codes with country names, filter data for specific years, or calculate averages.
