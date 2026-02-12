@@ -1,27 +1,23 @@
-"""
-Transform life expectancy data by mapping country codes to country names using WHO API.
-"""
-
 import pandas as pd
-import requests
 
-# Load the data
-df = pd.read_csv('life_expectancy_raw.csv')
+from typing import Tuple
 
-# Fetch country code to name mapping from WHO API
-response = requests.get('https://ghoapi.azureedge.net/api/DIMENSION/COUNTRY/DimensionValues')
-country_data = response.json()['value']
-country_code_map = {item['Code']: item['Title'] for item in country_data}
-
-# Replace country codes with country names
-df['country'] = df['country_code'].map(country_code_map)
-
-# Filter data for specific years (e.g., 2000 and 2010)
-filtered_df = df[df['year'].isin([2000, 2010])]
-
-# Calculate average life expectancy per country
-avg_life_expectancy = df.groupby('country')['life_expectancy'].mean().reset_index()
-
-# Save transformed data
-filtered_df.to_csv('filtered_life_expectancy.csv', index=False)
-avg_life_expectancy.to_csv('avg_life_expectancy.csv', index=False)
+def transform_life_expectancy(life_expectancy_df: pd.DataFrame, dimensions_df: pd.DataFrame) -> Tuple[pd.DataFrame, pd.DataFrame]:
+    """
+    Merge life expectancy data with country names from dimensions data.
+    Returns filtered and average life expectancy DataFrames.
+    """
+    # Build country code to name mapping from dimensions_df
+    country_code_map = dict(zip(dimensions_df['Code'], dimensions_df['Title']))
+    
+    # Replace country codes with country names
+    life_expectancy_df = life_expectancy_df.copy()
+    life_expectancy_df['country'] = life_expectancy_df['country_code'].map(country_code_map)
+    
+    # Filter data for specific years (e.g., 2000 and 2010)
+    filtered_df = life_expectancy_df[life_expectancy_df['year'].isin([2000, 2010])]
+    
+    # Calculate average life expectancy per country
+    avg_life_expectancy = life_expectancy_df.groupby('country')['life_expectancy'].mean().reset_index()
+    
+    return filtered_df, avg_life_expectancy
