@@ -1,15 +1,28 @@
-Requirements
+# ETL Pipeline for WHO GHO OData API
 
-Build a small ETL pipeline in Python that:
+This project implements a simple ETL (Extract, Transform, Load) pipeline in Python. The pipeline extracts health-related data from the WHO GHO OData API, applies basic transformations (such as replacing country codes with names and calculating averages), and loads the processed data into a PostgreSQL database.
 
-extracts data from the WHO GHO OData API,
+## Installation
 
-transforms the data in any reasonable way,
+1. Clone the repository:  
+    ```bash
+    git clone https://github.com/elvisiraguha/etl-pipeline-exercise
+    ```
 
-and loads it into a PostgreSQL database.
+2. Use a Python virtual environment.
 
+3. Install dependencies:  
+    ```bash
+    pip install -r requirements.txt
+    ```
 
-Extraction
-Use the WHO GHO OData API to extract data on a health-related topic of your choice (e.g., life expectancy, disease prevalence, etc.). You can find the API documentation here: https://www.who.int/data/gho/info/gho-odata-api.
+4. Set up your PostgreSQL database and update the connection settings in the configuration file or environment variables.
 
-Potential work to be done is replace country codes with country names, filter data for specific years, or calculate averages.
+5. Run the main script:  
+    ```bash
+    python src/main.py
+    ```
+
+## Goal
+
+The goal of this ETL pipeline is to automate the process of collecting, transforming, and storing WHO health data for further analysis or reporting.

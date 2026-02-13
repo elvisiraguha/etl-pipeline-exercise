@@ -1,17 +1,9 @@
 import requests
 import pandas as pd
 
-"""Module for extracting data from a given API URL."""
-
 def extract_from_ghoapi(api_url):
     """
-    Extracts data from the given API URL and returns it as a DataFrame.
-
-    Args:
-        api_url (str): The API endpoint URL.
-
-    Returns:
-        pd.DataFrame: DataFrame containing the extracted data.
+    Extract data from the given API URL and return as a DataFrame.
     """
     response = requests.get(api_url, timeout=10)
     response.raise_for_status()
